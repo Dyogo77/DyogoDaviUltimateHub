@@ -1,0 +1,138 @@
+-- Dyogo & Davi Ultimate Hub V1 Full Power
+
+local Settings = {
+    JoinTeam = "Pirates",
+    Translator = true,
+    AutoV4 = true,
+    AutoFruitCollector = true,
+    AutoGravityCombo = true,
+    KillAura = true,
+    EnableGUI = true
+}
+
+local function createGUI()
+    local player = game.Players.LocalPlayer
+    local ScreenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+    ScreenGui.Name = "DyogoDaviUltimateHub"
+
+    local Frame = Instance.new("Frame")
+    Frame.Size = UDim2.new(0, 280, 0, 420)
+    Frame.Position = UDim2.new(0.02, 0, 0.2, 0)
+    Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 70)
+    Frame.Parent = ScreenGui
+
+    local Title = Instance.new("TextLabel")
+    Title.Size = UDim2.new(1, 0, 0, 50)
+    Title.BackgroundColor3 = Color3.fromRGB(80, 30, 150)
+    Title.Text = "🔥 Dyogo & Davi Ultimate Hub V1"
+    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Title.Font = Enum.Font.GothamBold
+    Title.TextSize = 18
+    Title.Parent = Frame
+
+    local function createButton(text, y, callback)
+        local btn = Instance.new("TextButton")
+        btn.Size = UDim2.new(1, -20, 0, 35)
+        btn.Position = UDim2.new(0, 10, 0, y)
+        btn.BackgroundColor3 = Color3.fromRGB(100, 30, 160)
+        btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        btn.Font = Enum.Font.GothamBold
+        btn.TextSize = 15
+        btn.Text = text
+        btn.Parent = Frame
+        btn.MouseButton1Click:Connect(callback)
+    end
+
+    createButton("✅ Auto Farm", 70, function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/tlredz/Scripts/refs/heads/main/main.luau"))()
+    end)
+
+    createButton("🔋 Auto V4", 120, function()
+        spawn(function()
+            while task.wait(1) do
+                pcall(function()
+                    local args = {"Awakening", "Activate"}
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                end)
+            end
+        end)
+    end)
+
+    createButton("🍎 Auto Coletar Fruta", 170, function()
+        spawn(function()
+            while task.wait(3) do
+                pcall(function()
+                    for _, fruit in pairs(game.Workspace:GetChildren()) do
+                        if fruit:IsA("Tool") and fruit.Name:find("Fruit") then
+                            local hrp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                            if hrp then
+                                hrp.CFrame = fruit.Handle.CFrame
+                                wait(0.2)
+                                firetouchinterest(hrp, fruit.Handle, 0)
+                                firetouchinterest(hrp, fruit.Handle, 1)
+                            end
+                        end
+                    end
+                end)
+            end
+        end)
+    end)
+
+    createButton("💥 Auto Gravity Combo", 220, function()
+        spawn(function()
+            while task.wait(5) do
+                pcall(function()
+                    local vi = game:GetService("VirtualInputManager")
+                    local function pressKey(key)
+                        vi:SendKeyEvent(true, key, false, game)
+                        wait(0.2)
+                        vi:SendKeyEvent(false, key, false, game)
+                    end
+                    pressKey(Enum.KeyCode.Z)
+                    wait(0.5)
+                    pressKey(Enum.KeyCode.X)
+                    wait(0.5)
+                    pressKey(Enum.KeyCode.C)
+                    wait(0.5)
+                    pressKey(Enum.KeyCode.V)
+                end)
+            end
+        end)
+    end)
+
+    createButton("😂 Mensagem Troll", 270, function()
+        pcall(function()
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                "😂 Derrotado pelo canal Dyogo e Davi! Se inscreve aí! 😎",
+                "All"
+            )
+        end)
+    end)
+end
+
+if Settings.EnableGUI then
+    createGUI()
+end
+
+spawn(function()
+    while task.wait(0.1) do
+        pcall(function()
+            local plr = game.Players.LocalPlayer
+            local char = plr.Character
+            if char and char:FindFirstChild("HumanoidRootPart") then
+                for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if enemy:FindFirstChild("Humanoid") and enemy.Humanoid.Health > 0 then
+                        local dist = (char.HumanoidRootPart.Position - enemy.HumanoidRootPart.Position).Magnitude
+                        if dist < 10 then
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AttackEnemy", enemy)
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+print("🔥 Dyogo & Davi Ultimate Hub V1 carregado! Se inscreve no canal e bora farmar!")
+
+warn("Tubashox diz: Andando na água de Jordan! 👟🌊")
